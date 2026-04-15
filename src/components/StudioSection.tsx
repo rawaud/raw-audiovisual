@@ -1,5 +1,19 @@
 import { motion } from "framer-motion";
 import studioImg from "@/assets/studio-real.jpg";
+import portfolio1 from "@/assets/portfolio-1.jpg";
+import portfolio2 from "@/assets/portfolio-2.jpg";
+import portfolio3 from "@/assets/portfolio-3.jpg";
+import portfolio4 from "@/assets/portfolio-4.jpg";
+import portfolio5 from "@/assets/portfolio-5.jpg";
+import portfolio6 from "@/assets/portfolio-6.jpg";
+import portfolio7 from "@/assets/portfolio-7.jpg";
+import portfolio8 from "@/assets/portfolio-8.jpg";
+import portfolio9 from "@/assets/portfolio-9.jpg";
+
+const portfolioPhotos = [
+  portfolio1, portfolio2, portfolio3, portfolio4,
+  portfolio5, portfolio6, portfolio7, portfolio8, portfolio9,
+];
 
 const StudioSection = () => {
   return (
@@ -59,24 +73,24 @@ const StudioSection = () => {
             FOTOS QUE JÁ <span className="text-primary">PRODUZIMOS</span>
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {portfolioPhotos.map((photo, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="aspect-square bg-secondary border border-border overflow-hidden group"
+                className="aspect-[3/4] bg-secondary border border-border overflow-hidden group"
               >
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm font-body">
-                  Foto {i + 1}
-                </div>
+                <img
+                  src={photo}
+                  alt={`Foto produzida pela RAW ${i + 1}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
               </motion.div>
             ))}
           </div>
-          <p className="text-center text-muted-foreground mt-6 text-sm font-body">
-            Substitua os placeholders acima pelas suas fotos reais
-          </p>
         </div>
       </div>
     </section>

@@ -1,28 +1,58 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const categories = ["Área Médica", "Empreendimentos", "Advogados"];
-
-const videoPlaceholders: Record<string, { title: string; thumb: string }[]> = {
-  "Área Médica": [
-    { title: "Clínica Premium - Institucional", thumb: "" },
-    { title: "Dr. Silva - Procedimentos", thumb: "" },
-    { title: "Hospital Vida - Campanha", thumb: "" },
-  ],
-  "Empreendimentos": [
-    { title: "Residencial Aurora - Tour", thumb: "" },
-    { title: "Edifício Horizon - Lançamento", thumb: "" },
-    { title: "Condomínio Park - Drone", thumb: "" },
-  ],
-  "Advogados": [
-    { title: "Escritório Juris - Institucional", thumb: "" },
-    { title: "Dra. Santos - Personal Brand", thumb: "" },
-    { title: "Advocacia Digital - Série", thumb: "" },
-  ],
-};
+const categories = [
+  {
+    name: "Área Médica",
+    videos: [
+      { title: "Clínica Premium - Institucional" },
+      { title: "Dr. Silva - Procedimentos" },
+      { title: "Hospital Vida - Campanha" },
+    ],
+  },
+  {
+    name: "Empreendimentos",
+    videos: [
+      { title: "Residencial Aurora - Tour" },
+      { title: "Edifício Horizon - Lançamento" },
+      { title: "Condomínio Park - Drone" },
+    ],
+  },
+  {
+    name: "Advogados",
+    videos: [
+      { title: "Escritório Juris - Institucional" },
+      { title: "Dra. Santos - Personal Brand" },
+      { title: "Advocacia Digital - Série" },
+    ],
+  },
+];
 
 const VideosSection = () => {
-  const [active, setActive] = useState(categories[0]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollLeft = container.scrollLeft;
+      const sectionWidth = container.scrollWidth / categories.length;
+      const index = Math.round(scrollLeft / sectionWidth);
+      setActiveIndex(Math.min(index, categories.length - 1));
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToCategory = (index: number) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const sectionWidth = container.scrollWidth / categories.length;
+    container.scrollTo({ left: sectionWidth * index, behavior: "smooth" });
+  };
 
   return (
     <section id="videos" className="section-padding bg-card">
@@ -40,51 +70,75 @@ const VideosSection = () => {
           <div className="w-20 h-1 bg-primary" />
         </motion.div>
 
-        <div className="flex gap-4 mb-10 flex-wrap">
-          {categories.map((cat) => (
+        {/* Category indicators */}
+        <div className="flex gap-4 mb-8 flex-wrap">
+          {categories.map((cat, i) => (
             <button
-              key={cat}
-              onClick={() => setActive(cat)}
+              key={cat.name}
+              onClick={() => scrollToCategory(i)}
               className={`font-display text-lg tracking-wider px-6 py-3 border transition-all duration-300 ${
-                active === cat
+                activeIndex === i
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-transparent text-muted-foreground border-border hover:border-primary/50"
               }`}
             >
-              {cat.toUpperCase()}
+              {cat.name.toUpperCase()}
             </button>
           ))}
         </div>
 
-        <motion.div
-          key={active}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        {/* Horizontal scroll container */}
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-0"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {videoPlaceholders[active].map((video, i) => (
+          {categories.map((cat) => (
             <div
-              key={i}
-              className="group relative aspect-video bg-secondary border border-border overflow-hidden hover:border-primary/50 transition-all"
+              key={cat.name}
+              className="snap-start shrink-0 w-full"
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/40 transition-colors">
-                  <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-foreground border-b-8 border-b-transparent ml-1" 
-                    style={{ borderLeftWidth: '12px' }}
-                  />
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
-                <p className="font-display text-lg text-foreground">{video.title}</p>
-                <p className="text-xs text-primary font-body">{active}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pr-6">
+                {cat.videos.map((video, vi) => (
+                  <div
+                    key={vi}
+                    className="group relative aspect-video bg-secondary border border-border overflow-hidden hover:border-primary/50 transition-all"
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/40 transition-colors">
+                        <div
+                          className="w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent ml-1"
+                          style={{ borderLeftWidth: "12px", borderLeftColor: "hsl(var(--foreground))", borderLeftStyle: "solid" }}
+                        />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
+                      <p className="font-display text-lg text-foreground">{video.title}</p>
+                      <p className="text-xs text-primary font-body">{cat.name}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
-        </motion.div>
+        </div>
 
-        <p className="text-center text-muted-foreground mt-8 text-sm font-body">
-          Substitua os placeholders acima pelos seus vídeos reais
+        {/* Scroll progress dots */}
+        <div className="flex justify-center gap-3 mt-8">
+          {categories.map((cat, i) => (
+            <button
+              key={cat.name}
+              onClick={() => scrollToCategory(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === i ? "w-8 bg-primary" : "w-2 bg-border"
+              }`}
+              aria-label={cat.name}
+            />
+          ))}
+        </div>
+
+        <p className="text-center text-muted-foreground mt-6 text-sm font-body">
+          Arraste para o lado ou clique nas categorias para navegar
         </p>
       </div>
     </section>

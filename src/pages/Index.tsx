@@ -5,6 +5,7 @@ import VideosSection from "@/components/VideosSection";
 import StudioSection from "@/components/StudioSection";
 import EventsSection from "@/components/EventsSection";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <StudioSection />
       <EventsSection />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import studioImg from "@/assets/studio.jpg";
+import studioImg from "@/assets/studio-real.jpg";
 
 const StudioSection = () => {
   return (

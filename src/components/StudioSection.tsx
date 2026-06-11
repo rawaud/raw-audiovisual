@@ -6,13 +6,12 @@ import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 import portfolio6 from "@/assets/portfolio-6.jpg";
 import portfolio7 from "@/assets/portfolio-7.jpg";
-import portfolio7 from "@/assets/portfolio-7.jpg";
 import portfolio8 from "@/assets/portfolio-8.jpg";
 import portfolio9 from "@/assets/portfolio-9.jpg";
 
 const portfolioPhotos = [
   portfolio1, portfolio2, portfolio3, portfolio4,
-  portfolio5, portfolio6, portfolio7, portfolio8, portfolio9,
+  portfolio6, portfolio7, portfolio8, portfolio9,
 ];
 
 const StudioSection = () => {

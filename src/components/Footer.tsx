@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import rawLogo from "@/assets/logo-raw.png.asset.json";
 
 const Instagram = ({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,7 +18,7 @@ const Footer = () => {
     <footer id="contato" className="border-t border-border px-6 py-16 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         <div>
-          <h3 className="font-display text-4xl text-primary mb-2">RAW AUDIOVISUAL</h3>
+          <img src={rawLogo.url} alt="RAW Audiovisual" className="h-12 w-auto mb-3" />
           <p className="text-muted-foreground text-sm font-body">
             Captação · Edição · Estratégia · Design · Eventos
           </p>

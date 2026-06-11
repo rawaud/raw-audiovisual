@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import rawLogo from "@/assets/logo-raw.png.asset.json";
 
 const navItems = [
   { label: "Serviços", href: "#servicos" },
@@ -16,8 +17,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
-        <a href="#" className="font-display text-3xl tracking-wider text-primary">
-          RAW
+        <a href="#" className="flex items-center">
+          <img src={rawLogo.url} alt="RAW Audiovisual" className="h-9 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">

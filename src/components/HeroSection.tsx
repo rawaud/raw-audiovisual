@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
+import rawLogo from "@/assets/logo-raw.png.asset.json";
 
 const HeroSection = () => {
   return (
@@ -21,6 +22,11 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
+          <img
+            src={rawLogo.url}
+            alt="RAW Audiovisual"
+            className="h-20 md:h-28 w-auto mx-auto mb-8"
+          />
           <h1 className="font-display text-6xl md:text-8xl lg:text-9xl leading-none mb-4">
             <span className="text-primary">RAW</span>{" "}
             <span className="text-foreground">AUDIOVISUAL</span>

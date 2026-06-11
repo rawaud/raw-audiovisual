@@ -1,29 +1,39 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+import medThales from "@/assets/videos/med-thales.mp4.asset.json";
+import medDaniela from "@/assets/videos/med-daniela.mp4.asset.json";
+import medKleber from "@/assets/videos/med-kleber.mp4.asset.json";
+import empGuilherme from "@/assets/videos/emp-guilherme.mp4.asset.json";
+import empIbirapuera from "@/assets/videos/emp-ibirapuera.mp4.asset.json";
+import empOuroBranco from "@/assets/videos/emp-ourobranco.mp4.asset.json";
+import advJacques from "@/assets/videos/adv-jacques.mp4.asset.json";
+import advDhionatan from "@/assets/videos/adv-dhionatan.mp4.asset.json";
+import advCarol from "@/assets/videos/adv-carol.mp4.asset.json";
+
 const categories = [
   {
     name: "Área Médica",
     videos: [
-      { title: "Clínica Premium - Institucional" },
-      { title: "Dr. Silva - Procedimentos" },
-      { title: "Hospital Vida - Campanha" },
+      { title: "Dr. Thales", src: medThales.url },
+      { title: "Dra. Daniela", src: medDaniela.url },
+      { title: "Dr. Kleber", src: medKleber.url },
     ],
   },
   {
     name: "Empreendimentos",
     videos: [
-      { title: "Residencial Aurora - Tour" },
-      { title: "Edifício Horizon - Lançamento" },
-      { title: "Condomínio Park - Drone" },
+      { title: "Corretor Guilherme", src: empGuilherme.url },
+      { title: "Ibirapuera", src: empIbirapuera.url },
+      { title: "Ouro Branco", src: empOuroBranco.url },
     ],
   },
   {
     name: "Advogados",
     videos: [
-      { title: "Escritório Juris - Institucional" },
-      { title: "Dra. Santos - Personal Brand" },
-      { title: "Advocacia Digital - Série" },
+      { title: "Dr. Jacques", src: advJacques.url },
+      { title: "Dr. Dhionatan", src: advDhionatan.url },
+      { title: "Dra. Carol", src: advCarol.url },
     ],
   },
 ];
@@ -94,25 +104,21 @@ const VideosSection = () => {
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categories.map((cat) => (
-            <div
-              key={cat.name}
-              className="snap-start shrink-0 w-full"
-            >
+            <div key={cat.name} className="snap-start shrink-0 w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pr-6">
                 {cat.videos.map((video, vi) => (
                   <div
                     key={vi}
-                    className="group relative aspect-video bg-secondary border border-border overflow-hidden hover:border-primary/50 transition-all"
+                    className="group relative aspect-[9/16] bg-secondary border border-border overflow-hidden hover:border-primary/50 transition-all"
                   >
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/40 transition-colors">
-                        <div
-                          className="w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent ml-1"
-                          style={{ borderLeftWidth: "12px", borderLeftColor: "hsl(var(--foreground))", borderLeftStyle: "solid" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
+                    <video
+                      src={video.src}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/90 to-transparent">
                       <p className="font-display text-lg text-foreground">{video.title}</p>
                       <p className="text-xs text-primary font-body">{cat.name}</p>
                     </div>

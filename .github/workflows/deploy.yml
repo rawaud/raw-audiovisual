@@ -24,8 +24,12 @@ jobs:
           node-version: 20
       - run: npm install --no-audit --no-fund
       - run: npm run build
+      # Baixa logo e vídeos que o Lovable hospeda fora do repositório
+      - run: node scripts/fetch-lovable-assets.mjs
+        env:
+          LOVABLE_ORIGINS: ${{ vars.LOVABLE_ORIGINS }}
       # Fallback para rotas do React Router (SPA) no GitHub Pages
-      - run: cp dist/index.html dist/404.html
+      - run: cp dist/index.html dist/404.html && touch dist/.nojekyll
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
